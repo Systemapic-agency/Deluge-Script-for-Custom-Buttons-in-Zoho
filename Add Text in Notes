@@ -1,0 +1,25 @@
+string button.No_Answer_Function(String leadId) 
+{ 
+lead = zoho.crm.getRecordById("Leads",leadId); 
+if(lead == null) 
+{ 
+return "Invalid Lead ID: " + leadId; 
+} 
+// Create note details 
+noteDetails = Map(); 
+noteDetails.put("Note_Title","No Answer"); 
+noteDetails.put("Note_Content","No Answered on Outbound call"); 
+noteDetails.put("$se_module","Leads"); 
+noteDetails.put("Parent_Id",leadId); 
+// Create the note in Zoho CRM 
+response = zoho.crm.createRecord("Notes",noteDetails); 
+// Check if the note was successfully added 
+if(response.get("id") != null) 
+{ 
+return "No Answer note successfully added for Lead ID: " + leadId; 
+} 
+else 
+{ 
+return "Error adding No Answer note: " + response.get("message"); 
+} 
+}
