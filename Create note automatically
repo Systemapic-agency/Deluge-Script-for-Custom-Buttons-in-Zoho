@@ -1,0 +1,32 @@
+//Create Kisok First then use this code in function
+
+void automation.Create_Note_Function(String leadId, String noteTitle, String noteContent) 
+{ 
+// Validate inputs 
+if(leadId.isEmpty() || noteTitle.isEmpty() || noteContent.isEmpty()) 
+{ 
+info "Missing required input fields. Please ensure Lead ID, Note Title, and Note Content are 
+provided."; 
+return; 
+} 
+// Create a map for note data 
+noteData = Map(); 
+// Create a new Map object 
+noteData.put("Note_Title",noteTitle); 
+noteData.put("Note_Content",noteContent); 
+noteData.put("Parent_Id",leadId); 
+noteData.put("$se_module","Leads"); 
+// Specify the module 
+// Create the note 
+noteResponse = zoho.crm.createRecord("Notes",noteData); 
+// Check if the note was successfully created 
+if(noteResponse.get("id") != null) 
+{ 
+info "Note Created Successfully for Lead ID: " + leadId; 
+} 
+else 
+{ 
+} 
+} 
+errorMessage = "Failed to create note. Error: " + noteResponse.toString(); 
+info errorMessage;
