@@ -1,0 +1,26 @@
+string button.VoicemailFunction(String leadId) 
+{ 
+// Fetch the Lead record to ensure it exists (optional validation) 
+lead = zoho.crm.getRecordById("Leads",leadId); 
+if(lead == null) 
+{ 
+return "Invalid Lead ID: " + leadId; 
+} 
+// Create note details 
+noteDetails = Map(); 
+noteDetails.put("Note_Title","Voicemail Left"); 
+noteDetails.put("Note_Content","Left Voicemail!"); 
+noteDetails.put("$se_module","Leads"); 
+noteDetails.put("Parent_Id",leadId); 
+// Create the note in Zoho CRM 
+response = zoho.crm.createRecord("Notes",noteDetails); 
+// Check if the note was successfully added 
+if(response.get("id") != null) 
+{ 
+return "Voicemail note successfully added for Lead ID: " + leadId; 
+} 
+else 
+{ 
+return "Error adding voicemail note: " + response.get("message"); 
+} 
+} 
